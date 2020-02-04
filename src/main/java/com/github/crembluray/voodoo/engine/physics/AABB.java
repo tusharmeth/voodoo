@@ -40,9 +40,9 @@ public class AABB extends Component {
     }
 
     public boolean isPointInsideAABB(Vector3f point) {
-        return (point.x >= min.x + position.x && point.x <= max.x + position.x) &&
-               (point.y >= min.y + position.y && point.y <= max.y + position.y) &&
-               (point.z >= min.z + position.z && point.z <= max.z + position.z);
+        return (point.x >= (min.x * parent.getScale()) + position.x && point.x <= max.x + position.x) &&
+               (point.y >= (min.y * parent.getScale()) + position.y && point.y <= max.y + position.y) &&
+               (point.z >= (min.z * parent.getScale()) + position.z && point.z <= max.z + position.z);
     }
 
     public Vector3f getPosition() {

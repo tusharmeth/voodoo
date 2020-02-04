@@ -78,27 +78,32 @@ public class DummyGame implements IGameLogic {
 
         // Add child to gameObject
         GameObject child = new GameObject(childMesh);
-        child.setScale(0.5f);
-        child.setPosition(2.0f, 0.3f, -2.0f);
+        child.setScale(0.1f);
+        child.setPosition(-0.946899f, -0.170126f, -2.618736f);
+        childMesh.setMaterial(childMaterial);
+
+        GameObject gameObject1 = new GameObject(childMesh);
+        gameObject1.setScale(0.1f);
+        gameObject1.setPosition(0.610091f, 1.37321f, -1.412003f);
 
         // Add AABB to gameObject
         AABB aabb = new AABB();
         aabb.calcAABB("/models/bunny.obj");
         gameObject.addComponent(aabb);
         aabb.setPosition(aabb.getParent().getPosition());
-//        System.out.println(aabb.getMin().x + aabb.getPosition().x);
-//        System.out.println(aabb.getMin().y + aabb.getPosition().y);
-//        System.out.println(aabb.getMin().z + aabb.getPosition().z);
-//        System.out.println(aabb.getMax().x + aabb.getPosition().x);
-//        System.out.println(aabb.getMax().y + aabb.getPosition().y);
-//        System.out.println(aabb.getMax().z + aabb.getPosition().z);
+//        System.out.println((aabb.getMin().x * gameObject.getScale()) + aabb.getPosition().x);
+//        System.out.println((aabb.getMin().y * gameObject.getScale()) + aabb.getPosition().y);
+//        System.out.println((aabb.getMin().z * gameObject.getScale()) + aabb.getPosition().z);
+//        System.out.println((aabb.getMax().x * gameObject.getScale()) + aabb.getPosition().x);
+//        System.out.println((aabb.getMax().y * gameObject.getScale()) + aabb.getPosition().y);
+//        System.out.println((aabb.getMax().z * gameObject.getScale()) + aabb.getPosition().z);
 //
 //        System.out.println(aabb.isPointInsideAABB(new Vector3f(-1.7f, 1f, -2f)));
 
         gameObject.setChildren(new ArrayList<GameObject>());
         gameObject.addChild(child);
 
-        gameObjects = new GameObject[]{gameObject};
+        gameObjects = new GameObject[]{gameObject, gameObject1};
 
         ambientLight = new Vector3f(0.3f, 0.3f, 0.3f);
 
