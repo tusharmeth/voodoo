@@ -3,11 +3,9 @@ package com.github.crembluray.voodoo.engine.gameObject;
 import com.github.crembluray.voodoo.engine.model.Mesh;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-
 public class GameObject {
 
-    private final Mesh mesh;
+    private Mesh mesh;
 
     private final Vector3f position;
 
@@ -15,50 +13,29 @@ public class GameObject {
 
     private final Vector3f rotation;
 
-    private ArrayList<GameObject> children;
+    private final Component[] components;
 
-    private ArrayList<Component> components;
-
-    private GameObject parent;
-
-    public GameObject(Mesh mesh, ArrayList<GameObject> children, ArrayList<Component> components) {
-        this.mesh = mesh;
-        this.children = children;
-        this.components = components;
-        if(children != null) {
-            for(GameObject child : this.children)
-                child.setParent(this);
-        }
-        if(components != null) {
-            for(Component component : this.components)
-                component.setParent(this);
-        }
-        position = new Vector3f(0, 0, 0);
+    public GameObject() {
+        position = new Vector3f();
         scale = 1;
-        rotation = new Vector3f(0, 0, 0);
-    }
-
-    public GameObject(Mesh mesh, ArrayList<GameObject> children) {
-        this.mesh = mesh;
-        this.children = children;
-        this.components = new ArrayList<Component>();
-        if(children != null) {
-            for(GameObject child : this.children)
-                child.setParent(this);
-        }
-        position = new Vector3f(0, 0, 0);
-        scale = 1;
-        rotation = new Vector3f(0, 0, 0);
+        rotation = new Vector3f();
+        components = new Component[]{};
     }
 
     public GameObject(Mesh mesh) {
+        this();
         this.mesh = mesh;
-        children = new ArrayList<GameObject>();
-        components = new ArrayList<Component>();
-        position = new Vector3f(0, 0, 0);
-        scale = 1;
-        rotation = new Vector3f(0, 0, 0);
     }
+
+    public GameObject(Mesh mesh, Component[] components) {
+        position = new Vector3f();
+        scale = 1;
+        rotation = new Vector3f();
+        this.mesh = mesh;
+        this.components = components;
+    }
+
+    public Component[] getComponents() {return components;}
 
     public Vector3f getPosition() {
         return position;
@@ -92,48 +69,7 @@ public class GameObject {
         return mesh;
     }
 
-    public ArrayList<GameObject> getChildren() {
-        return children;
+    public void setMesh(Mesh mesh) {
+        this.mesh = mesh;
     }
-
-    public void addChild(GameObject child) {
-        children.add(child);
-        child.setParent(this);
-    }
-
-    public GameObject getChild(int index) {
-        return children.get(index);
-    }
-
-    public void setChildren(ArrayList<GameObject> children) {
-        this.children = children;
-        for(GameObject child : this.children)
-            child.setParent(this);
-    }
-
-    public Component getComponent(int index) {
-        return components.get(index);
-    }
-
-    public ArrayList<Component> getComponents() {
-        return components;
-    }
-
-    public void setComponents(ArrayList<Component> components) {
-        this.components = components;
-    }
-
-    public void addComponent(Component component) {
-        components.add(component);
-        component.setParent(this);
-    }
-
-    public void setParent(GameObject parent) {
-        this.parent = parent;
-    }
-
-    public GameObject getParent() {
-        return parent;
-    }
-
 }

@@ -19,7 +19,7 @@ struct Attenuation
 struct PointLight
 {
     vec3 color;
-    // Light position is assumed to be in view coordinates
+// Light position is assumed to be in view coordinates
     vec3 position;
     float intensity;
     Attenuation att;
@@ -105,7 +105,7 @@ vec4 calcPointLight(PointLight light, vec3 position, vec3 normal)
     // Apply Attenuation
     float distance = length(light_direction);
     float attenuationInv = light.att.constant + light.att.linear * distance +
-        light.att.exponent * distance * distance;
+    light.att.exponent * distance * distance;
     return light_color / attenuationInv;
 }
 
@@ -130,7 +130,6 @@ vec4 calcDirectionalLight(DirectionalLight light, vec3 position, vec3 normal)
 {
     return calcLightColor(light.color, light.intensity, position, normalize(light.direction), normal);
 }
-
 
 void main()
 {
