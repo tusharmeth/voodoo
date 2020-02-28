@@ -35,18 +35,18 @@ public class Boid extends GameObject {
 
         // Check if boid is inside boundary
         if(!boundary.isPointInsideBoundary(getPosition())) {
-            if(getPosition().x < boundary.getMin().x)
-                setPosition(boundary.getMax().x, getPosition().y, getPosition().z);
-            if(getPosition().y < boundary.getMin().y)
-                setPosition(getPosition().x, boundary.getMax().y, getPosition().z);
-            if(getPosition().z < boundary.getMin().z)
-                setPosition(getPosition().z, getPosition().y, boundary.getMax().z);
-            if(getPosition().x > boundary.getMax().x)
-                setPosition(boundary.getMin().x, getPosition().y, getPosition().z);
-            if(getPosition().y > boundary.getMax().y)
-                setPosition(getPosition().x, boundary.getMin().y, getPosition().z);
-            if(getPosition().z > boundary.getMax().z)
-                setPosition(getPosition().x, getPosition().y, boundary.getMin().z);
+            if(getPosition().x < boundary.getMin().x + boundary.getPosition().x)
+                setPosition(boundary.getMax().x + boundary.getPosition().x, getPosition().y, getPosition().z);
+            if(getPosition().y < boundary.getMin().y + boundary.getPosition().y)
+                setPosition(getPosition().x, boundary.getMax().y + boundary.getPosition().y, getPosition().z);
+            if(getPosition().z < boundary.getMin().z + boundary.getPosition().z)
+                setPosition(getPosition().z, getPosition().y, boundary.getMax().z + boundary.getPosition().z);
+            if(getPosition().x > boundary.getMax().x + boundary.getPosition().x)
+                setPosition(boundary.getMin().x + boundary.getPosition().x, getPosition().y, getPosition().z);
+            if(getPosition().y > boundary.getMax().y + boundary.getPosition().y)
+                setPosition(getPosition().x, boundary.getMin().y + boundary.getPosition().y, getPosition().z);
+            if(getPosition().z > boundary.getMax().z + boundary.getPosition().z)
+                setPosition(getPosition().x, getPosition().y, boundary.getMin().z + boundary.getPosition().z);
         }
     }
 
@@ -100,8 +100,6 @@ public class Boid extends GameObject {
                 getVelocity().y * 200,
                 getVelocity().z * 200
         );
-        //Vector3f newRot = getRotation().normalize();
-        //setRotation(newRot.x, newRot.y, newRot.z);
     }
 
     //Limit the vector size

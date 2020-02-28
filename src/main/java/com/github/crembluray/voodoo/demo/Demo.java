@@ -43,7 +43,15 @@ public class Demo implements IGameLogic {
         Boundary boundary = new Boundary(
                 new Vector3f(-50.0f, -50.0f, -50.0f), // min
                 new Vector3f(50.0f, 50.0f, 50.0f),    // max
-                new Vector3f(0, 0, 0));               // position
+                new Vector3f(-125, -75, -125));               // position
+
+        float skyBoxScale = 50.0f;
+
+        // Setup SkyBox
+        SkyBox skyBox = new SkyBox("/models/skybox.obj", "textures/skybox.png");
+        skyBox.setScale(skyBoxScale);
+        skyBox.setPosition(-125, -75, -125);
+        scene.setSkyBox(skyBox);
 
         // Create boids
         int numBoids = 500;
@@ -58,22 +66,15 @@ public class Demo implements IGameLogic {
             ), reflectance);
             mesh.setMaterial(material);
             Boid boid = new Boid(mesh, boundary, new Vector3f(
-                    (float)(Math.random() * 50),
-                    (float)(Math.random() * 50),
-                    (float)(Math.random() * 50)
+                    (float)(Math.random() * 50) + boundary.getPosition().x,
+                    (float)(Math.random() * 50) + boundary.getPosition().y,
+                    (float)(Math.random() * 50) + boundary.getPosition().z
             ));
             boid.setScale(0.5f);
             boids[i] = boid;
         }
 
-        float skyBoxScale = 50.0f;
-
         scene.setGameObjects(boids);
-
-        // Setup SkyBox
-        SkyBox skyBox = new SkyBox("/models/skybox.obj", "textures/skybox.png");
-        skyBox.setScale(skyBoxScale);
-        scene.setSkyBox(skyBox);
 
         // SetupLights
         setupLights();
