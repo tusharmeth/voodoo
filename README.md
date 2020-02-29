@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.com/CremBluRay/voodoo.svg?branch=master)](https://travis-ci.com/CremBluRay/voodoo)
-[![codecov](https://codecov.io/gh/CremBluRay/voodoo/branch/master/graph/badge.svg)](https://codecov.io/gh/CremBluRay/voodoo)
 <p align="center">
   <img src="https://raw.githubusercontent.com/CremBluRay/CremBluRay.github.io/master/images/demo/voodoo/voodoo.png" alt="React Native Game Engine" height="120" />
 </p>
