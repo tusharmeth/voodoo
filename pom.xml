@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.crembluray</groupId>
   <artifactId>voodoo</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
@@ -36,13 +36,13 @@
 		<repository>
 			<id>packagecloud-travis</id>
 			<url>
-				packagecloud+https://packagecloud.io/capotej/java-test-package
+				packagecloud+https://packagecloud.io/crembluray/voodoo
 			</url>
 		</repository>
 		<snapshotRepository>
 			<id>packagecloud-travis</id>
 			<url>
-				packagecloud+https://packagecloud.io/capotej/java-test-package
+				packagecloud+https://packagecloud.io/crembluray/voodoo
 			</url>
 		</snapshotRepository>
 	</distributionManagement>
