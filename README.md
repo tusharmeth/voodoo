@@ -147,4 +147,4 @@ public class Main {
 }
 ```
 # Contributing
-Please see [CONTRIBUTING.md](https://github.com/CremBluRay/voodoo/CONTRIBUTING.md/)
+Please see [CONTRIBUTING.md](https://github.com/CremBluRay/voodoo/blob/master/CONTRIBUTING.md)
