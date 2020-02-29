@@ -36,13 +36,13 @@
 		<repository>
 			<id>packagecloud-travis</id>
 			<url>
-				packagecloud+https://packagecloud.io/crembluray/voodoo
+				packagecloud+https://packagecloud.io/CremBluRay/voodoo
 			</url>
 		</repository>
 		<snapshotRepository>
 			<id>packagecloud-travis</id>
 			<url>
-				packagecloud+https://packagecloud.io/crembluray/voodoo
+				packagecloud+https://packagecloud.io/CremBluRay/voodoo
 			</url>
 		</snapshotRepository>
 	</distributionManagement>
