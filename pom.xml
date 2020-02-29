@@ -4,6 +4,9 @@
   <artifactId>voodoo</artifactId>
   <version>1.0.0</version>
 	<packaging>jar</packaging>
+
+	<name>voodoo</name>
+
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
