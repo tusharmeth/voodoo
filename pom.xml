@@ -22,20 +22,28 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
+				<version>0.6.3.201306030806</version>
 				<executions>
+					<!-- prepare agent for measuring integration tests -->
 					<execution>
-						<id>default-prepare-agent</id>
+						<id>prepare-integration-tests</id>
+						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
+						<configuration>
+							<destFile>${basedir}/target/coverage-reports/jacoco-unit.exec</destFile>
+						</configuration>
 					</execution>
 					<execution>
-						<id>report</id>
-						<phase>test</phase>
+						<id>jacoco-site</id>
+						<phase>post-integration-test</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
+						<configuration>
+							<dataFile>${basedir}/target/coverage-reports/jacoco-unit.exec</dataFile>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>
