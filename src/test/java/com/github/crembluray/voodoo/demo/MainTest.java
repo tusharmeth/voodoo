@@ -3,7 +3,7 @@ package com.github.crembluray.voodoo.demo;
 import com.github.crembluray.voodoo.engine.GameEngine;
 import com.github.crembluray.voodoo.engine.IGameLogic;
 
-public class Main {
+public class MainTest {
 
     public static void main(String[] args) {
         try {
