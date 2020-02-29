@@ -62,7 +62,7 @@
 					<appendAssemblyId>false</appendAssemblyId>
 					<archive>
 						<manifest>
-							<mainClass>com.github.crembluray.voodoo.demo.Main</mainClass>
+							<mainClass>com.github.crembluray.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
