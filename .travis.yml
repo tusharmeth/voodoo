@@ -1,11 +1,6 @@
 language: java
-cache:
-  directories:
-    - "$HOME/.cache"
-
-deploy:
-  provider: script
-  script: "cp .travis.settings.xml $HOME/.ms/settings.xml && mvn deploy"
-  skip_cleanup: true
-  on:
-    tags: true
+jdk:
+  - openjdk8
+  - openjdk11
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
