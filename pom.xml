@@ -23,7 +23,29 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<extensions>
+			<extension>
+				<groupId>io.packagecloud.maven.wagon</groupId>
+				<artifactId>maven-packagecloud-wagon</artifactId>
+				<version>0.0.4</version>
+			</extension>
+		</extensions>
 	</build>
+
+	<distributionManagement>
+		<repository>
+			<id>packagecloud-travis</id>
+			<url>
+				packagecloud+https://packagecloud.io/capotej/java-test-package
+			</url>
+		</repository>
+		<snapshotRepository>
+			<id>packagecloud-travis</id>
+			<url>
+				packagecloud+https://packagecloud.io/capotej/java-test-package
+			</url>
+		</snapshotRepository>
+	</distributionManagement>
 
 	<properties>
 		<lwjgl.version>3.2.3</lwjgl.version>
