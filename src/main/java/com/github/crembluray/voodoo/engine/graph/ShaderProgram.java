@@ -1,19 +1,18 @@
 package com.github.crembluray.voodoo.engine.graph;
 
-import com.github.crembluray.voodoo.engine.light.DirectionalLight;
-import com.github.crembluray.voodoo.engine.light.PointLight;
-import com.github.crembluray.voodoo.engine.light.SpotLight;
-import com.github.crembluray.voodoo.engine.model.Material;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
-import org.lwjgl.system.MemoryStack;
+import com.github.crembluray.voodoo.engine.graph.lights.DirectionalLight;
+import com.github.crembluray.voodoo.engine.graph.lights.PointLight;
+import com.github.crembluray.voodoo.engine.graph.lights.SpotLight;
+import com.github.crembluray.voodoo.engine.graph.weather.Fog;
 
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;
-
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 import static org.lwjgl.opengl.GL20.*;
+import org.lwjgl.system.MemoryStack;
 
 public class ShaderProgram {
 
@@ -22,6 +21,8 @@ public class ShaderProgram {
     private int vertexShaderId;
 
     private int fragmentShaderId;
+
+    private int geometryShaderId;
 
     private final Map<String, Integer> uniforms;
 
@@ -41,6 +42,12 @@ public class ShaderProgram {
         uniforms.put(uniformName, uniformLocation);
     }
 
+    public void createUniform(String uniformName, int size) throws Exception {
+        for (int i=0; i<size; i++) {
+            createUniform(uniformName + "[" + i + "]");
+        }
+    }
+
     public void createPointLightListUniform(String uniformName, int size) throws Exception {
         for (int i = 0; i < size; i++) {
             createPointLightUniform(uniformName + "[" + i + "]");
@@ -48,7 +55,7 @@ public class ShaderProgram {
     }
 
     public void createPointLightUniform(String uniformName) throws Exception {
-        createUniform(uniformName + ".color");
+        createUniform(uniformName + ".colour");
         createUniform(uniformName + ".position");
         createUniform(uniformName + ".intensity");
         createUniform(uniformName + ".att.constant");
@@ -69,7 +76,7 @@ public class ShaderProgram {
     }
 
     public void createDirectionalLightUniform(String uniformName) throws Exception {
-        createUniform(uniformName + ".color");
+        createUniform(uniformName + ".colour");
         createUniform(uniformName + ".direction");
         createUniform(uniformName + ".intensity");
     }
@@ -79,14 +86,36 @@ public class ShaderProgram {
         createUniform(uniformName + ".diffuse");
         createUniform(uniformName + ".specular");
         createUniform(uniformName + ".hasTexture");
+        createUniform(uniformName + ".hasNormalMap");
         createUniform(uniformName + ".reflectance");
+    }
+
+    public void createFogUniform(String uniformName) throws Exception {
+        createUniform(uniformName + ".activeFog");
+        createUniform(uniformName + ".colour");
+        createUniform(uniformName + ".density");
     }
 
     public void setUniform(String uniformName, Matrix4f value) {
         // Dump the matrix into a float buffer
         try (MemoryStack stack = MemoryStack.stackPush()) {
             glUniformMatrix4fv(uniforms.get(uniformName), false,
-                    value.get(stack.mallocFloat(16)));
+                               value.get(stack.mallocFloat(16)));
+        }
+    }
+
+    public void setUniform(String uniformName, Matrix4f value, int index) {
+        setUniform(uniformName + "[" + index  + "]", value);
+    }
+
+    public void setUniform(String uniformName, Matrix4f[] matrices) {
+        try (MemoryStack stack = MemoryStack.stackPush()) {
+            int length = matrices != null ? matrices.length : 0;
+            FloatBuffer fb = stack.mallocFloat(16 * length);
+            for (int i = 0; i < length; i++) {
+                matrices[i].get(16 * i, fb);
+            }
+            glUniformMatrix4fv(uniforms.get(uniformName), false, fb);
         }
     }
 
@@ -96,6 +125,10 @@ public class ShaderProgram {
 
     public void setUniform(String uniformName, float value) {
         glUniform1f(uniforms.get(uniformName), value);
+    }
+
+    public void setUniform(String uniformName, float value, int index) {
+        setUniform(uniformName + "[" + index  + "]", value);
     }
 
     public void setUniform(String uniformName, Vector3f value) {
@@ -145,7 +178,7 @@ public class ShaderProgram {
     }
 
     public void setUniform(String uniformName, DirectionalLight dirLight) {
-        setUniform(uniformName + ".color", dirLight.getColor());
+        setUniform(uniformName + ".colour", dirLight.getColor());
         setUniform(uniformName + ".direction", dirLight.getDirection());
         setUniform(uniformName + ".intensity", dirLight.getIntensity());
     }
@@ -155,7 +188,14 @@ public class ShaderProgram {
         setUniform(uniformName + ".diffuse", material.getDiffuseColour());
         setUniform(uniformName + ".specular", material.getSpecularColour());
         setUniform(uniformName + ".hasTexture", material.isTextured() ? 1 : 0);
+        setUniform(uniformName + ".hasNormalMap", material.hasNormalMap() ? 1 : 0);
         setUniform(uniformName + ".reflectance", material.getReflectance());
+    }
+
+    public void setUniform(String uniformName, Fog fog) {
+        setUniform(uniformName + ".activeFog", fog.isActive() ? 1 : 0);
+        setUniform(uniformName + ".colour", fog.getColour());
+        setUniform(uniformName + ".density", fog.getDensity());
     }
 
     public void createVertexShader(String shaderCode) throws Exception {
@@ -192,6 +232,9 @@ public class ShaderProgram {
 
         if (vertexShaderId != 0) {
             glDetachShader(programId, vertexShaderId);
+        }
+        if (geometryShaderId != 0) {
+            glDetachShader(programId, geometryShaderId);
         }
         if (fragmentShaderId != 0) {
             glDetachShader(programId, fragmentShaderId);

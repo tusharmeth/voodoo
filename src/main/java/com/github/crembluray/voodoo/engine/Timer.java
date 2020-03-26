@@ -3,13 +3,16 @@ package com.github.crembluray.voodoo.engine;
 public class Timer {
 
     private double lastLoopTime;
-
+    
     public void init() {
         lastLoopTime = getTime();
     }
 
+    /**
+     * @return Current time in seconds
+     */
     public double getTime() {
-        return System.nanoTime() / 1e9;
+        return System.nanoTime() / 1000_000_000.0;
     }
 
     public float getElapsedTime() {
@@ -22,5 +25,4 @@ public class Timer {
     public double getLastLoopTime() {
         return lastLoopTime;
     }
-
 }

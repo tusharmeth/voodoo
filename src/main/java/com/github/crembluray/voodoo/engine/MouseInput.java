@@ -2,7 +2,6 @@ package com.github.crembluray.voodoo.engine;
 
 import org.joml.Vector2d;
 import org.joml.Vector2f;
-
 import static org.lwjgl.glfw.GLFW.*;
 
 public class MouseInput {
@@ -43,6 +42,10 @@ public class MouseInput {
         return displVec;
     }
 
+    public Vector2d getCurrentPos() {
+        return currentPos;        
+    }
+    
     public void input(Window window) {
         displVec.x = 0;
         displVec.y = 0;
@@ -69,5 +72,4 @@ public class MouseInput {
     public boolean isRightButtonPressed() {
         return rightButtonPressed;
     }
-
 }
